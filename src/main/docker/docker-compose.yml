@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  application:
+    image: 'pancakes:latest'
+    build:
+      context: .
+    container_name: pancakes-application
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pancakes-db:5432/postgres?ssl=false&serverTimezone=UTC
+    ports:
+      - '8080:8080'
+  db:
+    image: postgres:14.4-alpine
+    container_name: pancakes-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - '5432:5432'
